@@ -1,17 +1,10 @@
 package io.bhaveekdesai.api.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name="weather.findAll", query="SELECT w FROM Weather w ORDER BY w.timestamp DESC"),
-        @NamedQuery(name="weather.listCities", query="SELECT DISTINCT w.city FROM Weather w ORDER BY w.city ASC"),
-        @NamedQuery(name="weather.findCurrent", query="SELECT w FROM Weather w WHERE w.city=:wcity ORDER BY w.timestamp DESC"),
-        @NamedQuery(name="weather.findAvg", query="SELECT w FROM Weather w WHERE w.city=:wcity AND w.timestamp>:wtimestamp")
-})
 public class Weather {
     @Id
     private String id;
@@ -20,7 +13,7 @@ public class Weather {
     private Double humidity;
     private Double pressure;
     private Double temperature;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Wind wind;
     @Column(name="timestamp", columnDefinition="TIMESTAMP DEFAULT")
     private Timestamp timestamp;
